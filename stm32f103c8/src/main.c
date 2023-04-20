@@ -112,6 +112,30 @@ int main(void)
       {GPIOD, GPIO_PIN_0 | GPIO_PIN_1, "D", 0},
   };
 
+  for (int i = 0; i < IO_NUM; i++)
+  {
+    Status *s = &statuses[i];
+    for (int j = 0; j < 16; j++)
+    {
+      uint16_t pin = 1 << j;
+      if (!(pin & s->pins))
+      {
+        continue;
+      }
+
+      GPIO_PinState v = HAL_GPIO_ReadPin(s->gpio, pin);
+
+      if (v == GPIO_PIN_SET && (s->state & pin) == 0)
+      {
+        s->state |= pin;
+      }
+      else if (v == GPIO_PIN_RESET && (s->state & pin) != 0)
+      {
+        s->state &= ~pin;
+      }
+    }
+  }
+
   printf("start\n");
 
   /* USER CODE END 2 */
@@ -127,11 +151,12 @@ int main(void)
       for (int j = 0; j < 16; j++)
       {
         uint16_t pin = 1 << j;
-        GPIO_PinState v = HAL_GPIO_ReadPin(s->gpio, pin);
         if (!(pin & s->pins))
         {
           continue;
         }
+
+        GPIO_PinState v = HAL_GPIO_ReadPin(s->gpio, pin);
 
         if (v == GPIO_PIN_SET && (s->state & pin) == 0)
         {
