@@ -30,16 +30,16 @@
 typedef struct __Status
 {
   GPIO_TypeDef *gpio;
-  uint16_t pin;
+  uint16_t pins;
   char *name;
-  GPIO_PinState state;
+  uint16_t state;
 } Status;
 
 /* USER CODE END PTD */
 
 /* Private define ------------------------------------------------------------*/
 /* USER CODE BEGIN PD */
-#define IO_NUM 35
+#define IO_NUM 4
 
 /* USER CODE END PD */
 
@@ -106,40 +106,10 @@ int main(void)
   setbuf(stdout, NULL);
 
   Status statuses[IO_NUM] = {
-      {GPIOA, GPIO_PIN_0, "A0", GPIO_PIN_SET},
-      {GPIOA, GPIO_PIN_1, "A1", GPIO_PIN_SET},
-      {GPIOA, GPIO_PIN_2, "A2", GPIO_PIN_SET},
-      {GPIOA, GPIO_PIN_3, "A3", GPIO_PIN_SET},
-      {GPIOA, GPIO_PIN_4, "A4", GPIO_PIN_SET},
-      {GPIOA, GPIO_PIN_5, "A5", GPIO_PIN_SET},
-      {GPIOA, GPIO_PIN_6, "A6", GPIO_PIN_SET},
-      {GPIOA, GPIO_PIN_7, "A7", GPIO_PIN_SET},
-      {GPIOA, GPIO_PIN_8, "A8", GPIO_PIN_SET},
-      {GPIOA, GPIO_PIN_11, "A11", GPIO_PIN_SET},
-      {GPIOA, GPIO_PIN_12, "A12", GPIO_PIN_SET},
-      {GPIOA, GPIO_PIN_13, "A13", GPIO_PIN_SET},
-      {GPIOA, GPIO_PIN_14, "A14", GPIO_PIN_SET},
-      {GPIOA, GPIO_PIN_15, "A15", GPIO_PIN_SET},
-      {GPIOB, GPIO_PIN_0, "B0", GPIO_PIN_SET},
-      {GPIOB, GPIO_PIN_1, "B1", GPIO_PIN_SET},
-      {GPIOB, GPIO_PIN_2, "B2", GPIO_PIN_SET},
-      {GPIOB, GPIO_PIN_3, "B3", GPIO_PIN_SET},
-      {GPIOB, GPIO_PIN_4, "B4", GPIO_PIN_SET},
-      {GPIOB, GPIO_PIN_5, "B5", GPIO_PIN_SET},
-      {GPIOB, GPIO_PIN_6, "B6", GPIO_PIN_SET},
-      {GPIOB, GPIO_PIN_7, "B7", GPIO_PIN_SET},
-      {GPIOB, GPIO_PIN_8, "B8", GPIO_PIN_SET},
-      {GPIOB, GPIO_PIN_10, "B10", GPIO_PIN_SET},
-      {GPIOB, GPIO_PIN_11, "B11", GPIO_PIN_SET},
-      {GPIOB, GPIO_PIN_12, "B12", GPIO_PIN_SET},
-      {GPIOB, GPIO_PIN_13, "B13", GPIO_PIN_SET},
-      {GPIOB, GPIO_PIN_14, "B14", GPIO_PIN_SET},
-      {GPIOB, GPIO_PIN_15, "B15", GPIO_PIN_SET},
-      {GPIOC, GPIO_PIN_13, "C14", GPIO_PIN_SET},
-      {GPIOC, GPIO_PIN_14, "C14", GPIO_PIN_SET},
-      {GPIOC, GPIO_PIN_15, "C15", GPIO_PIN_SET},
-      {GPIOD, GPIO_PIN_0, "D0", GPIO_PIN_SET},
-      {GPIOD, GPIO_PIN_1, "D1", GPIO_PIN_SET},
+      {GPIOA, GPIO_PIN_0 | GPIO_PIN_1 | GPIO_PIN_2 | GPIO_PIN_3 | GPIO_PIN_4 | GPIO_PIN_5 | GPIO_PIN_6 | GPIO_PIN_7 | GPIO_PIN_8 | GPIO_PIN_11 | GPIO_PIN_12 | GPIO_PIN_13 | GPIO_PIN_14 | GPIO_PIN_15, "A", 0},
+      {GPIOB, GPIO_PIN_0 | GPIO_PIN_1 | GPIO_PIN_2 | GPIO_PIN_10 | GPIO_PIN_11 | GPIO_PIN_12 | GPIO_PIN_13 | GPIO_PIN_14 | GPIO_PIN_15 | GPIO_PIN_3 | GPIO_PIN_4 | GPIO_PIN_5 | GPIO_PIN_6 | GPIO_PIN_7 | GPIO_PIN_8, "B", 0},
+      {GPIOC, GPIO_PIN_13 | GPIO_PIN_14 | GPIO_PIN_15, "C", 0},
+      {GPIOD, GPIO_PIN_0 | GPIO_PIN_1, "D", 0},
   };
 
   printf("start\n");
@@ -154,18 +124,25 @@ int main(void)
     for (int i = 0; i < IO_NUM; i++)
     {
       Status *s = &statuses[i];
-      GPIO_PinState v = HAL_GPIO_ReadPin(s->gpio, s->pin);
-      if (v != s->state)
+      for (int j = 0; j < 16; j++)
       {
-        if (v == GPIO_PIN_SET)
+        uint16_t pin = 1 << j;
+        GPIO_PinState v = HAL_GPIO_ReadPin(s->gpio, pin);
+        if (!(pin & s->pins))
         {
-          printf("%s: H\n", s->name);
+          continue;
         }
-        else
+
+        if (v == GPIO_PIN_SET && (s->state & pin) == 0)
         {
-          printf("%s: L\n", s->name);
+          printf("%s%d: H\n", s->name, j);
+          s->state |= pin;
         }
-        s->state = v;
+        else if (v == GPIO_PIN_RESET && (s->state & pin) != 0)
+        {
+          printf("%s%d: L\n", s->name, j);
+          s->state &= ~pin;
+        }
       }
     }
     HAL_Delay(100);
