@@ -21,3 +21,10 @@ PlatformIO で構築。Ubuntu AMD64 マシンにてビルドを確認済み。
 - CH32V003F4P6 (TX: D5)
 
 For RP2040 with USB CDC (USB CDC を使った RP2040 用はこちら) -> https://github.com/74th/rp2040-dev-board/tree/main/rp2040-io-tester
+
+## License
+
+MIT
+
+- CH32V main file: WCH https://github.com/openwch/ch32v003/blob/main/C%2B%2B/Use%20MRS%20Create%20C%2B%2B%20project-example/CH32V003F4P6/User/main.cpp
+- STM32F103 main file: STMicroelectronics
