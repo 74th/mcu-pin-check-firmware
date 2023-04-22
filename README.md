@@ -9,8 +9,8 @@ PlatformIO で構築。Ubuntu AMD64 マシンにてビルドを確認済み。
 
 ## 対応 MCU
 
-- STM32F103C8
-- CH32V203C8T6
-- CH32V003F4P6
+- STM32F103C8 (TX: A9)
+- CH32V203C8T6 (TX: A9)
+- CH32V003F4P6 (TX: D5)
 
 RP2040 用はこちら → https://github.com/74th/rp2040-dev-board/tree/main/rp2040-io-tester
