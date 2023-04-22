@@ -4,11 +4,11 @@
  * Version            : V1.0.0
  * Date               : 2022/08/08
  * Description        : Main program body.
-*********************************************************************************
-* Copyright (c) 2021 Nanjing Qinheng Microelectronics Co., Ltd.
-* Attention: This software (modified or not) and binary are used for 
-* microcontroller manufactured by Nanjing Qinheng Microelectronics.
-*******************************************************************************/
+ *********************************************************************************
+ * Copyright (c) 2021 Nanjing Qinheng Microelectronics Co., Ltd.
+ * Attention: This software (modified or not) and binary are used for
+ * microcontroller manufactured by Nanjing Qinheng Microelectronics.
+ *******************************************************************************/
 
 /*
  *@Note
@@ -20,49 +20,96 @@
 #include "debug.h"
 
 /* Global define */
+typedef struct __Status
+{
+    GPIO_TypeDef *gpio;
+    uint16_t pins;
+    char *name;
+    uint16_t state;
+} Status;
+
+#define IO_NUM 3
 
 /* Global Variable */
+Status statuses[IO_NUM] = {
+    {GPIOA, GPIO_Pin_1 | GPIO_Pin_2, "A", 0},
+    {GPIOC, GPIO_Pin_0 | GPIO_Pin_1 | GPIO_Pin_2 | GPIO_Pin_3 | GPIO_Pin_4 | GPIO_Pin_5 | GPIO_Pin_6 | GPIO_Pin_7, "C", 0},
+    {GPIOD, GPIO_Pin_0 | GPIO_Pin_1 | GPIO_Pin_2 | GPIO_Pin_3 | GPIO_Pin_4 | GPIO_Pin_7, "D", 0},
+};
 
-/*********************************************************************
- * @fn      GPIO_Toggle_INIT
- *
- * @brief   Initializes GPIOA.0
- *
- * @return  none
- */
-void GPIO_Toggle_INIT(void)
+void GPIO_INIT(void)
 {
     GPIO_InitTypeDef GPIO_InitStructure = {0};
 
+    RCC_APB2PeriphClockCmd(RCC_APB2Periph_GPIOA, ENABLE);
+    GPIO_InitStructure.GPIO_Pin = GPIO_Pin_1 | GPIO_Pin_2;
+    GPIO_InitStructure.GPIO_Mode = GPIO_Mode_IPU;
+    GPIO_InitStructure.GPIO_Speed = GPIO_Speed_50MHz;
+    GPIO_Init(GPIOA, &GPIO_InitStructure);
+    RCC_APB2PeriphClockCmd(RCC_APB2Periph_GPIOC, ENABLE);
+    GPIO_InitStructure.GPIO_Pin = GPIO_Pin_0 | GPIO_Pin_1 | GPIO_Pin_2 | GPIO_Pin_3 | GPIO_Pin_4 | GPIO_Pin_5 | GPIO_Pin_6 | GPIO_Pin_7;
+    GPIO_InitStructure.GPIO_Mode = GPIO_Mode_IPU;
+    GPIO_InitStructure.GPIO_Speed = GPIO_Speed_50MHz;
+    GPIO_Init(GPIOC, &GPIO_InitStructure);
     RCC_APB2PeriphClockCmd(RCC_APB2Periph_GPIOD, ENABLE);
-    GPIO_InitStructure.GPIO_Pin = GPIO_Pin_0;
-    GPIO_InitStructure.GPIO_Mode = GPIO_Mode_Out_PP;
+    GPIO_InitStructure.GPIO_Pin = GPIO_Pin_0 | GPIO_Pin_1 | GPIO_Pin_2 | GPIO_Pin_3 | GPIO_Pin_4 | GPIO_Pin_7;
+    GPIO_InitStructure.GPIO_Mode = GPIO_Mode_IPU;
     GPIO_InitStructure.GPIO_Speed = GPIO_Speed_50MHz;
     GPIO_Init(GPIOD, &GPIO_InitStructure);
 }
 
-/*********************************************************************
- * @fn      main
- *
- * @brief   Main program.
- *
- * @return  none
- */
 int main(void)
 {
-    u8 i = 0;
-
     NVIC_PriorityGroupConfig(NVIC_PriorityGroup_2);
     Delay_Init();
     USART_Printf_Init(115200);
-    printf("SystemClk:%d\r\n", SystemCoreClock);
+    GPIO_INIT();
 
-    printf("GPIO Toggle TEST\r\n");
-    GPIO_Toggle_INIT();
+    Delay_Ms(100);
 
-    while(1)
+    for (int i = 0; i < IO_NUM; i++)
     {
-        Delay_Ms(250);
-        GPIO_WriteBit(GPIOD, GPIO_Pin_0, (i == 0) ? (i = Bit_SET) : (i = Bit_RESET));
+        Status *s = &statuses[i];
+
+        s->state = GPIO_ReadInputData(s->gpio);
+    }
+
+    printf("init\n");
+
+    while (1)
+    {
+        Delay_Ms(100);
+
+        for (int i = 0; i < IO_NUM; i++)
+        {
+            Status *s = &statuses[i];
+
+            uint8_t v = GPIO_ReadInputData(s->gpio);
+            // printf("@@1 %s: %x %x %x\n", s->name, s->pins, v, s->state);
+
+            for (int j = 0; j < 16; j++)
+            {
+                uint16_t pin = 1 << j;
+                if (!(pin & s->pins))
+                {
+                    continue;
+                }
+                // printf("@@2 %d: %x %x %x %d\n", j, pin, v & pin, s->state & pin, (v & pin) != (s->state & pin));
+
+                if ((v & pin) != (s->state & pin))
+                {
+                    if (v & pin)
+                    {
+                        printf("%s%d: H\n", s->name, j);
+                    }
+                    else
+                    {
+                        printf("%s%d: L\n", s->name, j);
+                    }
+                }
+            }
+
+            s->state = v;
+        }
     }
 }
