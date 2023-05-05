@@ -6,35 +6,34 @@ typedef struct __Status
   int status;
 } Status;
 
-// #define IO_NUM 25
-#define IO_NUM 2
+#define IO_NUM 25
 
 Status statuses[IO_NUM] = {
-    // {GPIO_NUM_0, 0},
+    {GPIO_NUM_0, 0},
     {GPIO_NUM_2, 0},
     {GPIO_NUM_4, 0},
-    // {GPIO_NUM_5, 0},
-    // {GPIO_NUM_12, 0},
-    // {GPIO_NUM_13, 0},
-    // {GPIO_NUM_14, 0},
-    // {GPIO_NUM_15, 0},
-    // {GPIO_NUM_16, 0},
-    // {GPIO_NUM_17, 0},
-    // {GPIO_NUM_18, 0},
-    // {GPIO_NUM_19, 0},
-    // {GPIO_NUM_21, 0},
-    // {GPIO_NUM_22, 0},
-    // {GPIO_NUM_23, 0},
-    // {GPIO_NUM_25, 0},
-    // {GPIO_NUM_26, 0},
-    // {GPIO_NUM_27, 0},
-    // {GPIO_NUM_31, 0},
-    // {GPIO_NUM_32, 0},
-    // {GPIO_NUM_33, 0},
-    // {GPIO_NUM_34, 0},
-    // {GPIO_NUM_35, 0},
-    // {GPIO_NUM_36, 0},
-    // {GPIO_NUM_39, 0},
+    {GPIO_NUM_5, 0},
+    {GPIO_NUM_12, 0},
+    {GPIO_NUM_13, 0},
+    {GPIO_NUM_14, 0},
+    {GPIO_NUM_15, 0},
+    {GPIO_NUM_16, 0},
+    {GPIO_NUM_17, 0},
+    {GPIO_NUM_18, 0},
+    {GPIO_NUM_19, 0},
+    {GPIO_NUM_21, 0},
+    {GPIO_NUM_22, 0},
+    {GPIO_NUM_23, 0},
+    {GPIO_NUM_25, 0},
+    {GPIO_NUM_26, 0},
+    {GPIO_NUM_27, 0},
+    {GPIO_NUM_31, 0},
+    {GPIO_NUM_32, 0},
+    {GPIO_NUM_33, 0},
+    {GPIO_NUM_34, 0},
+    {GPIO_NUM_35, 0},
+    {GPIO_NUM_36, 0},
+    {GPIO_NUM_39, 0},
 };
 
 void setup()
@@ -65,6 +64,13 @@ void loop()
         Serial.printf("%d H\n", statuses[i].pin_no);
       }
     }
+  }
+
+  char buf[256];
+  int n = Serial.read(buf, 256);
+  if (n > 0)
+  {
+    Serial.printf("RX: %s\n", buf);
   }
 
   delay(100);
