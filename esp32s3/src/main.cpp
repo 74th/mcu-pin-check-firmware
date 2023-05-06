@@ -6,7 +6,7 @@ typedef struct __Status
   int status;
 } Status;
 
-#define IO_NUM 29
+#define IO_NUM 27
 
 Status statuses[IO_NUM] = {
     {GPIO_NUM_0, 0},
@@ -28,8 +28,6 @@ Status statuses[IO_NUM] = {
     {GPIO_NUM_16, 0},
     {GPIO_NUM_17, 0},
     {GPIO_NUM_18, 0},
-    {GPIO_NUM_19, 0},
-    {GPIO_NUM_20, 0},
     {GPIO_NUM_21, 0},
     {GPIO_NUM_38, 0},
     {GPIO_NUM_39, 0},
