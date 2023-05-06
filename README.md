@@ -16,9 +16,11 @@ PlatformIO で構築。Ubuntu AMD64 マシンにてビルドを確認済み。
 
 ## Supported MCU (対応 MCU)
 
-- STM32F103C8 (TX: A9)
-- CH32V203C8T6 (TX: A9)
-- CH32V003F4P6 (TX: D5)
+- [STM32F103C8](stm32f103c8) (TX: A9)
+- [STM32G030F6](stm32g030f6) (TX: B3)
+- [ESP32](esp32) (TX: TXD0)
+- [CH32V203C8T6](ch32v203c8t6) (TX: A9)
+- [CH32V003F4P6](ch32v003f4p6) (TX: D5)
 
 For RP2040 with USB CDC (USB CDC を使った RP2040 用はこちら) -> https://github.com/74th/rp2040-dev-board/tree/main/rp2040-io-tester
 
