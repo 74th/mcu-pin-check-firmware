@@ -19,6 +19,8 @@ PlatformIO で構築。Ubuntu AMD64 マシンにてビルドを確認済み。
 - [STM32F103C8](stm32f103c8) (TX: A9)
 - [STM32G030F6](stm32g030f6) (TX: B3)
 - [ESP32](esp32) (TX: TXD0)
+- [ESP32-S3](esp32s3) (TX: TXD0)
+- [ESP32-C3](esp32c3) (TX: TXD0)
 - [CH32V203C8T6](ch32v203c8t6) (TX: A9)
 - [CH32V003F4P6](ch32v003f4p6) (TX: D5)
 
