@@ -1,0 +1,7 @@
+# ESP32-S3
+
+## Untested Ports
+
+- GPIO19-20: USB
+- GPIO35-17: FLASH
+- GPIO43-44: UART0
