@@ -105,7 +105,7 @@ int main(void)
   /* USER CODE BEGIN 2 */
   setbuf(stdout, NULL);
   Status statuses[IO_NUM] = {
-      {GPIOA, GPIO_PIN_0 | GPIO_PIN_1 | GPIO_PIN_2 | GPIO_PIN_3 | GPIO_PIN_4 | GPIO_PIN_5 | GPIO_PIN_6 | GPIO_PIN_7 | GPIO_PIN_8 | GPIO_PIN_11 | GPIO_PIN_12 | GPIO_PIN_13 | GPIO_PIN_15, "A", 0},
+      {GPIOA, GPIO_PIN_0 | GPIO_PIN_1 | GPIO_PIN_2 | GPIO_PIN_3 | GPIO_PIN_4 | GPIO_PIN_5 | GPIO_PIN_6 | GPIO_PIN_7 | GPIO_PIN_8 | GPIO_PIN_11 | GPIO_PIN_12, "A", 0},
       {GPIOC, GPIO_PIN_14 | GPIO_PIN_15, "C", 0},
   };
 
@@ -149,12 +149,14 @@ int main(void)
       for (int j = 0; j < 16; j++)
       {
         uint16_t pin = 1 << j;
-        GPIO_PinState v = HAL_GPIO_ReadPin(s->gpio, pin);
         if (!(pin & s->pins))
         {
           continue;
         }
 
+        GPIO_PinState v = HAL_GPIO_ReadPin(s->gpio, pin);
+
+        printf("%s%d: read %d %d\n", s->name, j, v, s->state);
         if (v == GPIO_PIN_SET && (s->state & pin) == 0)
         {
           printf("%s%d: H\n", s->name, j);
@@ -167,7 +169,7 @@ int main(void)
         }
       }
     }
-    HAL_Delay(100);
+    HAL_Delay(1000);
 
     /* USER CODE BEGIN 3 */
   }
