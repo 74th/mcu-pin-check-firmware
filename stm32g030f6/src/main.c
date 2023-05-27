@@ -32,7 +32,7 @@ typedef struct __Status
   GPIO_TypeDef *gpio;
   uint16_t pins;
   char *name;
-  GPIO_PinState state;
+  uint32_t state;
 } Status;
 
 /* USER CODE END PTD */
@@ -112,25 +112,8 @@ int main(void)
   for (int i = 0; i < IO_NUM; i++)
   {
     Status *s = &statuses[i];
-    for (int j = 0; j < 16; j++)
-    {
-      uint16_t pin = 1 << j;
-      if (!(pin & s->pins))
-      {
-        continue;
-      }
-
-      GPIO_PinState v = HAL_GPIO_ReadPin(s->gpio, pin);
-
-      if (v == GPIO_PIN_SET && (s->state & pin) == 0)
-      {
-        s->state |= pin;
-      }
-      else if (v == GPIO_PIN_RESET && (s->state & pin) != 0)
-      {
-        s->state &= ~pin;
-      }
-    }
+    uint32_t v = s->gpio->IDR;
+    s->state = v;
   }
 
   printf("start\n");
@@ -146,6 +129,12 @@ int main(void)
     for (int i = 0; i < IO_NUM; i++)
     {
       Status *s = &statuses[i];
+      uint32_t v = s->gpio->IDR;
+      if (v == s->state)
+      {
+        continue;
+      }
+
       for (int j = 0; j < 16; j++)
       {
         uint16_t pin = 1 << j;
@@ -154,22 +143,23 @@ int main(void)
           continue;
         }
 
-        GPIO_PinState v = HAL_GPIO_ReadPin(s->gpio, pin);
-
-        printf("%s%d: read %d %d\n", s->name, j, v, s->state);
-        if (v == GPIO_PIN_SET && (s->state & pin) == 0)
+        if ((v & pin) == (s->state & pin))
         {
-          printf("%s%d: H\n", s->name, j);
-          s->state |= pin;
+          continue;
         }
-        else if (v == GPIO_PIN_RESET && (s->state & pin) != 0)
+
+        if ((v & pin) == 0)
         {
           printf("%s%d: L\n", s->name, j);
-          s->state &= ~pin;
+        }
+        else
+        {
+          printf("%s%d: H\n", s->name, j);
         }
       }
+      s->state = v;
     }
-    HAL_Delay(1000);
+    HAL_Delay(100);
 
     /* USER CODE BEGIN 3 */
   }
@@ -293,7 +283,7 @@ static void MX_GPIO_Init(void)
                            PA4 PA5 PA6 PA7
                            PA8 PA11 PA12 PA13
                            PA15 */
-  GPIO_InitStruct.Pin = GPIO_PIN_0 | GPIO_PIN_1 | GPIO_PIN_2 | GPIO_PIN_3 | GPIO_PIN_4 | GPIO_PIN_5 | GPIO_PIN_6 | GPIO_PIN_7 | GPIO_PIN_8 | GPIO_PIN_11 | GPIO_PIN_12 | GPIO_PIN_13 | GPIO_PIN_15;
+  GPIO_InitStruct.Pin = GPIO_PIN_0 | GPIO_PIN_1 | GPIO_PIN_2 | GPIO_PIN_3 | GPIO_PIN_4 | GPIO_PIN_5 | GPIO_PIN_6 | GPIO_PIN_7 | GPIO_PIN_8 | GPIO_PIN_11 | GPIO_PIN_12;
   GPIO_InitStruct.Mode = GPIO_MODE_INPUT;
   GPIO_InitStruct.Pull = GPIO_PULLUP;
   HAL_GPIO_Init(GPIOA, &GPIO_InitStruct);
