@@ -117,11 +117,11 @@ int main(void)
                 {
                     if (v & pin)
                     {
-                        printf("%s%d: H\n", s->name, j);
+                        printf("%s%d: H\r\n", s->name, j);
                     }
                     else
                     {
-                        printf("%s%d: L\n", s->name, j);
+                        printf("%s%d: L\r\n", s->name, j);
                     }
                 }
             }
