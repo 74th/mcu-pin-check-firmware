@@ -32,19 +32,13 @@ typedef struct __Status
 #define IO_NUM 4
 
 /* Global Variable */
-Status statuses[IO_NUM] = {
-    {GPIOA, GPIO_Pin_0 | GPIO_Pin_1 | GPIO_Pin_2 | GPIO_Pin_3 | GPIO_Pin_4 | GPIO_Pin_5 | GPIO_Pin_6 | GPIO_Pin_7 | GPIO_Pin_8 | GPIO_Pin_11 | GPIO_Pin_12 | GPIO_Pin_13 | GPIO_Pin_14 | GPIO_Pin_15, "A", 0},
-    {GPIOB, GPIO_Pin_0 | GPIO_Pin_1 | GPIO_Pin_2 | GPIO_Pin_10 | GPIO_Pin_11 | GPIO_Pin_12 | GPIO_Pin_13 | GPIO_Pin_14 | GPIO_Pin_15 | GPIO_Pin_3 | GPIO_Pin_4 | GPIO_Pin_5 | GPIO_Pin_6 | GPIO_Pin_7 | GPIO_Pin_8 | GPIO_Pin_9, "B", 0},
-    {GPIOC, GPIO_Pin_13 | GPIO_Pin_14 | GPIO_Pin_15, "C", 0},
-    {GPIOD, GPIO_Pin_0 | GPIO_Pin_1, "D", 0},
-};
 
 void GPIO_INIT(void)
 {
     GPIO_InitTypeDef GPIO_InitStructure = {0};
 
     RCC_APB2PeriphClockCmd(RCC_APB2Periph_GPIOA, ENABLE);
-    GPIO_InitStructure.GPIO_Pin = GPIO_Pin_0 | GPIO_Pin_1 | GPIO_Pin_2 | GPIO_Pin_3 | GPIO_Pin_4 | GPIO_Pin_5 | GPIO_Pin_6 | GPIO_Pin_7 | GPIO_Pin_8 | GPIO_Pin_11 | GPIO_Pin_12 | GPIO_Pin_13 | GPIO_Pin_14 | GPIO_Pin_15;
+    GPIO_InitStructure.GPIO_Pin = GPIO_Pin_0 | GPIO_Pin_1 | GPIO_Pin_2 | GPIO_Pin_3 | GPIO_Pin_4 | GPIO_Pin_5 | GPIO_Pin_6 | GPIO_Pin_7 | GPIO_Pin_8 | GPIO_Pin_10 | GPIO_Pin_11 | GPIO_Pin_12 | GPIO_Pin_13 | GPIO_Pin_14 | GPIO_Pin_15;
     GPIO_InitStructure.GPIO_Mode = GPIO_Mode_IPU;
     GPIO_InitStructure.GPIO_Speed = GPIO_Speed_50MHz;
     GPIO_Init(GPIOA, &GPIO_InitStructure);
@@ -81,28 +75,34 @@ int main(void)
     Delay_Init();
     USART_Printf_Init(115200);
     GPIO_INIT();
+    Status statuses[IO_NUM] = {
+        {GPIOA, GPIO_Pin_0 | GPIO_Pin_1 | GPIO_Pin_2 | GPIO_Pin_3 | GPIO_Pin_4 | GPIO_Pin_5 | GPIO_Pin_6 | GPIO_Pin_7 | GPIO_Pin_8 | GPIO_Pin_10 | GPIO_Pin_11 | GPIO_Pin_12 | GPIO_Pin_13 | GPIO_Pin_14 | GPIO_Pin_15, "A", 0},
+        {GPIOB, GPIO_Pin_0 | GPIO_Pin_1 | GPIO_Pin_2 | GPIO_Pin_10 | GPIO_Pin_11 | GPIO_Pin_12 | GPIO_Pin_13 | GPIO_Pin_14 | GPIO_Pin_15 | GPIO_Pin_3 | GPIO_Pin_4 | GPIO_Pin_5 | GPIO_Pin_6 | GPIO_Pin_7 | GPIO_Pin_8 | GPIO_Pin_9, "B", 0},
+        {GPIOC, GPIO_Pin_13 | GPIO_Pin_14 | GPIO_Pin_15, "C", 0},
+        {GPIOD, GPIO_Pin_0 | GPIO_Pin_1, "D", 0},
+    };
 
     Delay_Ms(100);
 
     for (int i = 0; i < IO_NUM; i++)
     {
         Status *s = &statuses[i];
-
-        s->state = GPIO_ReadInputData(s->gpio);
+        uint32_t v = s->gpio->INDR;
+        s->state = v;
     }
 
-    printf("init\n");
+    printf("init\r\n");
 
     while (1)
     {
-        Delay_Ms(100);
-
         for (int i = 0; i < IO_NUM; i++)
         {
             Status *s = &statuses[i];
-
-            uint8_t v = GPIO_ReadInputData(s->gpio);
-            // printf("@@1 %s: %x %x %x\n", s->name, s->pins, v, s->state);
+            uint32_t v = s->gpio->INDR;
+            if (v == s->state)
+            {
+                continue;
+            }
 
             for (int j = 0; j < 16; j++)
             {
@@ -111,22 +111,23 @@ int main(void)
                 {
                     continue;
                 }
-                // printf("@@2 %d: %x %x %x %d\n", j, pin, v & pin, s->state & pin, (v & pin) != (s->state & pin));
 
-                if ((v & pin) != (s->state & pin))
+                if ((v & pin) == (s->state & pin))
                 {
-                    if (v & pin)
-                    {
-                        printf("%s%d: H\r\n", s->name, j);
-                    }
-                    else
-                    {
-                        printf("%s%d: L\r\n", s->name, j);
-                    }
+                    continue;
+                }
+
+                if ((v & pin) == 0)
+                {
+                    printf("%s%d: L\r\n", s->name, j);
+                }
+                else
+                {
+                    printf("%s%d: H\r\n", s->name, j);
                 }
             }
-
             s->state = v;
         }
+        Delay_Ms(100);
     }
 }
