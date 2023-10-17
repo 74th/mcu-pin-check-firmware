@@ -24,6 +24,7 @@ PlatformIO で構築。Ubuntu AMD64 マシンにてビルドを確認済み。
 - [ESP32-C3](esp32c3) (TX: TXD0)
 - [CH32V203C8T6](ch32v203c8t6) (TX: A9)
 - [CH32V003F4P6](ch32v003f4p6) (TX: D5)
+- [CH32X035](ch32x035) (TX: B10)
 
 For RP2040 with USB CDC (USB CDC を使った RP2040 用はこちら) -> https://github.com/74th/rp2040-dev-board/tree/main/rp2040-io-tester
 

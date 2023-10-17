@@ -1,54 +1,44 @@
-/********************************** (C) COPYRIGHT *******************************
- * File Name          : main.c
- * Author             : WCH
- * Version            : V1.0.0
- * Date               : 2023/04/06
- * Description        : Main program body.
- *********************************************************************************
- * Copyright (c) 2021 Nanjing Qinheng Microelectronics Co., Ltd.
- * Attention: This software (modified or not) and binary are used for
- * microcontroller manufactured by Nanjing Qinheng Microelectronics.
- *******************************************************************************/
-
-/*
- *@Note
- *GPIO routine:
- *PA0 push-pull output.
- *
- ***Only PA0--PA15 and PC16--PC17 support input pull-down.
- */
-
 #include "debug.h"
 
 /* Global define */
+#define IO_NUM 3
+#define TARGET_GPIOA GPIO_Pin_0 | GPIO_Pin_1 | GPIO_Pin_2 | GPIO_Pin_3 | GPIO_Pin_4 | GPIO_Pin_5 | GPIO_Pin_6 | GPIO_Pin_7 | GPIO_Pin_8 | GPIO_Pin_10 | GPIO_Pin_11 | GPIO_Pin_12 | GPIO_Pin_13 | GPIO_Pin_14 | GPIO_Pin_15 | GPIO_Pin_16 | GPIO_Pin_17 | GPIO_Pin_18 | GPIO_Pin_19 | GPIO_Pin_20 | GPIO_Pin_21 | GPIO_Pin_22 | GPIO_Pin_23
+#define TARGET_GPIOB GPIO_Pin_0 | GPIO_Pin_1 | GPIO_Pin_2 | GPIO_Pin_3 | GPIO_Pin_4 | GPIO_Pin_5 | GPIO_Pin_6 | GPIO_Pin_7 | GPIO_Pin_8 | GPIO_Pin_9 | GPIO_Pin_11 | GPIO_Pin_12 | GPIO_Pin_13 | GPIO_Pin_14 | GPIO_Pin_15 | GPIO_Pin_16 | GPIO_Pin_17 | GPIO_Pin_18 | GPIO_Pin_19 | GPIO_Pin_20 | GPIO_Pin_21
+#define TARGET_GPIOC GPIO_Pin_0 | GPIO_Pin_1 | GPIO_Pin_2 | GPIO_Pin_3 | GPIO_Pin_4 | GPIO_Pin_5 | GPIO_Pin_6 | GPIO_Pin_7 | GPIO_Pin_14 | GPIO_Pin_15 | GPIO_Pin_16 | GPIO_Pin_17
+
+typedef struct __Status
+{
+    GPIO_TypeDef *gpio;
+    uint16_t pins;
+    char *name;
+    uint16_t state;
+} Status;
 
 /* Global Variable */
 
-/*********************************************************************
- * @fn      GPIO_Toggle_INIT
- *
- * @brief   Initializes GPIOA.0
- *
- * @return  none
- */
-void GPIO_Toggle_INIT(void)
+void init_gpio(void)
 {
     GPIO_InitTypeDef GPIO_InitStructure = {0};
 
     RCC_APB2PeriphClockCmd(RCC_APB2Periph_GPIOA, ENABLE);
-    GPIO_InitStructure.GPIO_Pin = GPIO_Pin_0;
-    GPIO_InitStructure.GPIO_Mode = GPIO_Mode_Out_PP;
+    GPIO_InitStructure.GPIO_Pin = TARGET_GPIOA;
+    GPIO_InitStructure.GPIO_Mode = GPIO_Mode_IPU;
     GPIO_InitStructure.GPIO_Speed = GPIO_Speed_50MHz;
     GPIO_Init(GPIOA, &GPIO_InitStructure);
+
+    RCC_APB2PeriphClockCmd(RCC_APB2Periph_GPIOB, ENABLE);
+    GPIO_InitStructure.GPIO_Pin = TARGET_GPIOB;
+    GPIO_InitStructure.GPIO_Mode = GPIO_Mode_IPU;
+    GPIO_InitStructure.GPIO_Speed = GPIO_Speed_50MHz;
+    GPIO_Init(GPIOB, &GPIO_InitStructure);
+
+    RCC_APB2PeriphClockCmd(RCC_APB2Periph_GPIOC, ENABLE);
+    GPIO_InitStructure.GPIO_Pin = TARGET_GPIOB;
+    GPIO_InitStructure.GPIO_Mode = GPIO_Mode_IPU;
+    GPIO_InitStructure.GPIO_Speed = GPIO_Speed_50MHz;
+    GPIO_Init(GPIOC, &GPIO_InitStructure);
 }
 
-/*********************************************************************
- * @fn      main
- *
- * @brief   Main program.
- *
- * @return  none
- */
 int main(void)
 {
     u8 i = 0;
@@ -59,12 +49,60 @@ int main(void)
     USART_Printf_Init(115200);
     printf("SystemClk:%d\r\n", SystemCoreClock);
     printf("ChipID:%08x\r\n", DBGMCU_GetCHIPID());
-    printf("GPIO Toggle TEST\r\n");
-    GPIO_Toggle_INIT();
+    init_gpio();
+
+    Status statuses[IO_NUM] = {
+        {GPIOA, TARGET_GPIOA, "A", 0},
+        {GPIOB, TARGET_GPIOB, "B", 0},
+        {GPIOC, TARGET_GPIOC, "C", 0},
+    };
+
+    Delay_Ms(100);
+
+    for (int i = 0; i < IO_NUM; i++)
+    {
+        Status *s = &statuses[i];
+        uint32_t v = s->gpio->INDR;
+        s->state = v;
+    }
+
+    printf("init\r\n");
 
     while (1)
     {
-        Delay_Ms(500);
-        GPIO_WriteBit(GPIOA, GPIO_Pin_0, (i == 0) ? (i = Bit_SET) : (i = Bit_RESET));
+        for (int i = 0; i < IO_NUM; i++)
+        {
+            Status *s = &statuses[i];
+            uint32_t v = s->gpio->INDR;
+            if (v == s->state)
+            {
+                continue;
+            }
+
+            for (int j = 0; j < 16; j++)
+            {
+                uint16_t pin = 1 << j;
+                if (!(pin & s->pins))
+                {
+                    continue;
+                }
+
+                if ((v & pin) == (s->state & pin))
+                {
+                    continue;
+                }
+
+                if ((v & pin) == 0)
+                {
+                    printf("%s%d: L\r\n", s->name, j);
+                }
+                else
+                {
+                    printf("%s%d: H\r\n", s->name, j);
+                }
+            }
+            s->state = v;
+        }
+        Delay_Ms(100);
     }
 }
