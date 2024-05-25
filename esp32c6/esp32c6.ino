@@ -65,7 +65,7 @@ void loop()
     int n = Serial.read(buf, 256);
     if (n > 0)
     {
-        Serial.printf("RX: %s\n", buf);
+        Serial.printf("RX: %s\r\n", buf);
     }
 
     delay(100);
