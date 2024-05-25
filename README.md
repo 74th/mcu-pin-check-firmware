@@ -22,6 +22,7 @@ PlatformIO で構築。Ubuntu AMD64 マシンにてビルドを確認済み。
 - [ESP32](esp32) (TX: TXD0)
 - [ESP32-S3](esp32s3) (TX: TXD0)
 - [ESP32-C3](esp32c3) (TX: TXD0)
+- [ESP32-C6](esp32c5) (USB CDC)
 - [CH32V203C8T6](ch32v203c8t6) (TX: A9)
 - [CH32V003F4P6](ch32v003f4p6) (TX: D5)
 - [CH32X035](ch32x035) (TX: B10)

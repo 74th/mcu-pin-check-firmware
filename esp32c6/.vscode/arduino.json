@@ -1,0 +1,7 @@
+{
+    "sketch": "esp32c6.ino",
+    "output": "build",
+    "configuration": "JTAGAdapter=default,CDCOnBoot=cdc,PartitionScheme=default,CPUFreq=160,FlashMode=qio,FlashFreq=80,FlashSize=4M,UploadSpeed=921600,DebugLevel=none,EraseFlash=none,ZigbeeMode=default",
+    "board": "esp32:esp32:esp32c6",
+    "port": "/dev/ttyACM1"
+}
