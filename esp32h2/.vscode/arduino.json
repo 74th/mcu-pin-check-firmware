@@ -1,0 +1,7 @@
+{
+    "sketch": "esp32h2.ino",
+    "output": "build",
+    "configuration": "JTAGAdapter=default,CDCOnBoot=cdc,PartitionScheme=default,FlashMode=qio,FlashFreq=64,FlashSize=4M,UploadSpeed=921600,DebugLevel=none,EraseFlash=none,ZigbeeMode=default",
+    "board": "esp32:esp32:esp32h2",
+    "port": "/dev/ttyUSB0"
+}
