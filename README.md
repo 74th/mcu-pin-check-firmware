@@ -16,21 +16,21 @@ PlatformIO で構築（例外あり）。Ubuntu AMD64 マシンにてビルド�
 
 ## Supported MCU (対応 MCU)
 
-| MCU                          | UART                 | Platform      |
-| ---------------------------- | -------------------- | ------------- |
-| [STM32F103C8](stm32f103c8)   | TX: A9               | PlatformIO    |
-| [STM32G030F6](stm32g030f6)   | TX: B3               | PlatformIO    |
-| [STM32G431](stm32g431)       | TX: B6               | PlatformIO    |
-| [ESP32](esp32)               | TX: TXD0             | PlatformIO    |
-| [ESP32-S3](esp32s3)          | TX: TXD0             | PlatformIO    |
-| [ESP32-C3](esp32c3)          | TX: TXD0             | PlatformIO    |
-| [ESP32-C6](esp32c6)          | USB CDC              | Arduino       |
-| [ESP32-H2](esp32h2)          | USB CDC              | Arduino       |
-| [CH32V203C8T6](ch32v203c8t6) | TX: A9               | PlatformIO    |
-| [CH32V003F4P6](ch32v003f4p6) | TX: D5               | PlatformIO    |
-| [CH32X035](ch32x035)         | TX: B10              | PlatformIO    |
-| [RP2040](rp2040)             | USB CDC、using cmake | cmake PickSDK |
-| [RP2350](rp2350)             | USB CDC、using cmake | cmake PickSDK |
+| MCU                                | UART     | Framework | Build Platform |
+| ---------------------------------- | -------- | --------- | -------------- |
+| STMicro [STM32F103C8](stm32f103c8) | TX: A9   | STM32Cube | PlatformIO     |
+| STMicro [STM32G030F6](stm32g030f6) | TX: B3   | STM32Cube | PlatformIO     |
+| STMicro [STM32G431](stm32g431)     | TX: B6   | STM32Cube | PlatformIO     |
+| Espressif [ESP32](esp32)           | TX: TXD0 | Arduino   | PlatformIO     |
+| Espressif [ESP32-S3](esp32s3)      | TX: TXD0 | Arduino   | PlatformIO     |
+| Espressif [ESP32-C3](esp32c3)      | TX: TXD0 | Arduino   | PlatformIO     |
+| Espressif [ESP32-C6](esp32c6)      | USB CDC  | Arduino   | Arduino        |
+| Espressif [ESP32-H2](esp32h2)      | USB CDC  | Arduino   | Arduino        |
+| WCH [CH32V203C8T6](ch32v203c8t6)   | TX: A9   | WCH SDK   | PlatformIO     |
+| WCH [CH32V003F4P6](ch32v003f4p6)   | TX: D5   | WCH SDK   | PlatformIO     |
+| WCH [CH32X035](ch32x035)           | TX: B10  | WCH SDK   | PlatformIO     |
+| Raspbery Pi [RP2040](rp2040)       | USB CDC  | PickSDK   | cmake          |
+| Raspbery Pi [RP2350](rp2350)       | USB CDC  | PickSDK   | cmake          |
 
 ## License
 
