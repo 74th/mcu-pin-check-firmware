@@ -1,0 +1,175 @@
+
+firmware.elf:     file format elf32-littleriscv
+
+SYMBOL TABLE:
+00000000 l    d  .init	00000000 .init
+000000a0 l    d  .text	00000000 .text
+000008ec l    d  .fini	00000000 .fini
+20000000 l    d  .dalign	00000000 .dalign
+000008ec l    d  .dlalign	00000000 .dlalign
+20000000 l    d  .data	00000000 .data
+20000088 l    d  .bss	00000000 .bss
+00000000 l    d  .riscv.attributes	00000000 .riscv.attributes
+00000000 l    d  .debug_info	00000000 .debug_info
+00000000 l    d  .debug_abbrev	00000000 .debug_abbrev
+00000000 l    d  .debug_loclists	00000000 .debug_loclists
+00000000 l    d  .debug_aranges	00000000 .debug_aranges
+00000000 l    d  .debug_rnglists	00000000 .debug_rnglists
+00000000 l    d  .debug_line	00000000 .debug_line
+00000000 l    d  .debug_str	00000000 .debug_str
+00000000 l    d  .debug_line_str	00000000 .debug_line_str
+00000000 l    d  .debug_frame	00000000 .debug_frame
+00000154 l     F .text	0000009c mini_pad
+000001f0 l     F .text	000000c0 mini_itoa.part.0
+000002b0 l     F .text	0000000c internal_handle_input.constprop.0
+000002bc l     F .text	000000ea _write.constprop.0
+000003a6 l     F .text	00000014 __puts_uart
+00000482 l     F .text	000001b4 mini_vpprintf
+20000000 l     O .data	00000084 statuses
+00000000 l    df *ABS*	00000000 div.o
+00000446 g     F .text	0000002a EXTI2_IRQHandler
+00000446 g     F .text	0000002a TIM8_TRG_COM_IRQHandler
+00000446 g     F .text	0000002a TIM8_CC_IRQHandler
+00000446 g     F .text	0000002a UART8_IRQHandler
+00000636  w    F .text	00000026 printf
+20000888 g       .data	00000000 __global_pointer$
+00000446 g     F .text	0000002a TIM1_CC_IRQHandler
+00000446 g     F .text	0000002a HardFault_Handler
+00000446 g     F .text	0000002a USBPD_IRQHandler
+00000446 g     F .text	0000002a TIM6_IRQHandler
+00000446 g     F .text	0000002a SysTick_Handler
+00000446 g     F .text	0000002a PVD_IRQHandler
+00000446 g     F .text	0000002a SDIO_IRQHandler
+00000446 g     F .text	0000002a TIM9_BRK_IRQHandler
+00000446 g     F .text	0000002a DMA2_Channel8_IRQHandler
+00000438 g     F .text	0000000e NMI_Handler
+00000446 g     F .text	0000002a CAN2_RX1_IRQHandler
+00000446 g     F .text	0000002a EXTI3_IRQHandler
+00000446 g     F .text	0000002a USBHS_IRQHandler
+00000446 g     F .text	0000002a DMA2_Channel9_IRQHandler
+00000446 g     F .text	0000002a TIM10_CC_IRQHandler
+00000000 g     F .init	0000009c InterruptVectorDefault
+20000088 g       .bss	00000000 _sbss
+00000446 g     F .text	0000002a EXTI25_16_IRQHandler
+00000446 g     F .text	0000002a USBFS_IRQHandler
+0000066e  w    F .text	0000001c memcpy
+00000000 g     F .init	0000009c InterruptVector
+00000446 g     F .text	0000002a EXTI0_IRQHandler
+00000446 g     F .text	0000002a I2C2_EV_IRQHandler
+00000446 g     F .text	0000002a TIM10_TRG_COM_IRQHandler
+0000068a  w    F .text	0000002c puts
+000000a8 g     F .text	00000048 .hidden __hidden___udivsi3
+000000a8 g     F .text	00000048 .hidden __udivsi3
+000000a0 g       .init	00000000 _einit
+00000446 g     F .text	0000002a CAN2_SCE_IRQHandler
+00000446 g     F .text	0000002a ADC1_2_IRQHandler
+00000446 g     F .text	0000002a BB_IRQHandler
+00000446 g     F .text	0000002a Break_Point_Handler
+00000446 g     F .text	0000002a TIM2_CC_IRQHandler
+00000446 g     F .text	0000002a SPI1_IRQHandler
+00000446 g     F .text	0000002a TAMPER_IRQHandler
+00000446 g     F .text	0000002a AWU_IRQHandler
+00000446 g     F .text	0000002a EXTI7_0_IRQHandler
+00000446 g     F .text	0000002a CAN2_RX0_IRQHandler
+00000446 g     F .text	0000002a OSCWakeUp_IRQHandler
+00000446 g     F .text	0000002a TIM8_UP_IRQHandler
+00000446 g     F .text	0000002a Ecall_M_Mode_Handler
+00000446 g     F .text	0000002a DMA2_Channel2_IRQHandler
+00000446 g     F .text	0000002a DMA1_Channel4_IRQHandler
+00000446 g     F .text	0000002a ADC1_IRQHandler
+00000446 g     F .text	0000002a TIM2_BRK_IRQHandler
+00000446 g     F .text	0000002a TIM9_UP_IRQHandler
+00000446 g     F .text	0000002a USART3_IRQHandler
+00000446 g     F .text	0000002a RTC_IRQHandler
+20000088 g       .bss	00000000 _ebss
+00000446 g     F .text	0000002a DMA1_Channel7_IRQHandler
+00002176  w      .debug_info	00000000 .hidden firmware.c.4a96db23
+00000446 g     F .text	0000002a CAN1_RX1_IRQHandler
+00000446 g     F .text	0000002a DVP_IRQHandler
+00000446 g     F .text	0000002a UART5_IRQHandler
+00000446 g     F .text	0000002a EXTI15_8_IRQHandler
+00000446 g     F .text	0000002a TIM4_IRQHandler
+00000446 g     F .text	0000002a DMA2_Channel1_IRQHandler
+000000f0 g     F .text	00000010 .hidden __umodsi3
+00000446 g     F .text	0000002a USBPD_WKUP_IRQHandler
+00000446 g     F .text	0000002a I2C1_EV_IRQHandler
+00000446 g     F .text	0000002a USART4_IRQHandler
+00000446 g     F .text	0000002a DMA1_Channel6_IRQHandler
+00000446 g     F .text	0000002a UART4_IRQHandler
+00000446 g     F .text	0000002a DMA2_Channel4_IRQHandler
+00000446 g     F .text	0000002a TIM3_IRQHandler
+00000446 g     F .text	0000002a RCC_IRQHandler
+00000446 g     F .text	0000002a TIM1_TRG_COM_IRQHandler
+00000446 g     F .text	0000002a DMA1_Channel1_IRQHandler
+00000446 g     F .text	0000002a DMA2_Channel7_IRQHandler
+00000446 g     F .text	0000002a EXTI15_10_IRQHandler
+00000446 g     F .text	0000002a DMA1_Channel8_IRQHandler
+00000446 g     F .text	0000002a DefaultIRQHandler
+00000446 g     F .text	0000002a TIM7_IRQHandler
+00000446 g     F .text	0000002a CAN2_TX_IRQHandler
+20000000 g       .dalign	00000000 _data_vma
+00000446 g     F .text	0000002a TIM5_IRQHandler
+00000438 g     F .text	0000000e NMI_RCC_CSS_IRQHandler
+00000446 g     F .text	0000002a EXTI9_5_IRQHandler
+00000446 g     F .text	0000002a PIOC_IRQHandler
+00000446 g     F .text	0000002a SPI2_IRQHandler
+00000446 g     F .text	0000002a OSC32KCal_IRQHandler
+0000065c  w    F .text	00000012 memset
+000006f2 g     F .text	00000198 main
+00000446 g     F .text	0000002a TIM10_BRK_IRQHandler
+00000446 g     F .text	0000002a TIM9_CC_IRQHandler
+00000446 g     F .text	0000002a DMA2_Channel5_IRQHandler
+00001118  w      .debug_info	00000000 .hidden ch32v003fun.c.095fbae4
+00000446 g     F .text	0000002a USBHSWakeUp_IRQHandler
+00000446 g     F .text	0000002a DMA1_Channel5_IRQHandler
+00000446 g     F .text	0000002a EXTI4_IRQHandler
+000000a0 g     F .text	00000084 .hidden __divsi3
+00000446 g     F .text	0000002a USB_LP_CAN1_RX0_IRQHandler
+000006b6 g     F .text	0000003c SystemInit
+00000446 g     F .text	0000002a RNG_IRQHandler
+00000446 g     F .text	0000002a USB_HP_CAN1_TX_IRQHandler
+00000446 g     F .text	0000002a LLE_IRQHandler
+00000000 g       .init	00000000 _sinit
+00000446 g     F .text	0000002a DMA1_Channel3_IRQHandler
+00000446 g     F .text	0000002a FSMC_IRQHandler
+00000446 g     F .text	0000002a ETH_IRQHandler
+00000446 g     F .text	0000002a TIM1_UP_IRQHandler
+00000446 g     F .text	0000002a WWDG_IRQHandler
+00000446 g     F .text	0000002a DMA2_Channel11_IRQHandler
+00000446 g     F .text	0000002a Ecall_U_Mode_Handler
+00000446 g     F .text	0000002a DMA2_Channel6_IRQHandler
+00000446 g     F .text	0000002a TIM2_IRQHandler
+20000800 g       .data	00000000 _eusrstack
+00000446 g     F .text	0000002a SW_Handler
+00000446 g     F .text	0000002a TIM1_BRK_IRQHandler
+00000446 g     F .text	0000002a OPA_IRQHandler
+00000446 g     F .text	0000002a DMA2_Channel10_IRQHandler
+00000446 g     F .text	0000002a EXTI1_IRQHandler
+20000088 g       .data	00000000 _edata
+00000446 g     F .text	0000002a RTCAlarm_IRQHandler
+000008ec g       .dlalign	00000000 _data_lma
+00000446 g     F .text	0000002a TIM10_UP_IRQHandler
+00000446 g     F .text	0000002a TIM9_TRG_COM_IRQHandler
+00000446 g     F .text	0000002a UART7_IRQHandler
+00000446 g     F .text	0000002a USART2_IRQHandler
+00000446 g     F .text	0000002a UART6_IRQHandler
+00000446 g     F .text	0000002a ETHWakeUp_IRQHandler
+00000124 g     F .text	00000030 .hidden __modsi3
+00000446 g     F .text	0000002a I2C2_ER_IRQHandler
+00000446 g     F .text	0000002a DMA1_Channel2_IRQHandler
+00000446 g     F .text	0000002a TIM8_BRK_IRQHandler
+000003ba g     F .text	0000007e handle_reset
+00000446 g     F .text	0000002a TIM2_TRG_IRQHandler
+00000446 g     F .text	0000002a CAN1_SCE_IRQHandler
+00000446 g     F .text	0000002a FLASH_IRQHandler
+00000446 g     F .text	0000002a USBFSWakeUp_IRQHandler
+00000446 g     F .text	0000002a USART1_IRQHandler
+00000470  w    F .text	00000012 strlen
+00000446 g     F .text	0000002a OTG_FS_IRQHandler
+00000446 g     F .text	0000002a SPI3_IRQHandler
+00000446 g     F .text	0000002a USBFS_WakeUp_IRQHandler
+00000446 g     F .text	0000002a I2C1_ER_IRQHandler
+00000446 g     F .text	0000002a USBWakeUp_IRQHandler
+00000446 g     F .text	0000002a DMA2_Channel3_IRQHandler
+
+
