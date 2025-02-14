@@ -34,6 +34,8 @@ pico_sdk_init()
 
 add_executable(rp2350 rp2350.c )
 
+target_compile_definitions(rp2350 PRIVATE PICO_XOSC_STARTUP_DELAY_MULTIPLIER=64)
+
 pico_set_program_name(rp2350 "rp2350")
 pico_set_program_version(rp2350 "0.1")
 

@@ -34,6 +34,8 @@ pico_sdk_init()
 
 add_executable(rp2040 rp2040.c )
 
+target_compile_definitions(rp2040 PRIVATE PICO_XOSC_STARTUP_DELAY_MULTIPLIER=64)
+
 pico_set_program_name(rp2040 "rp2040")
 pico_set_program_version(rp2040 "0.1")
 
@@ -52,4 +54,3 @@ target_include_directories(rp2040 PRIVATE
 )
 
 pico_add_extra_outputs(rp2040)
-
