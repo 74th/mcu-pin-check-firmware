@@ -30,8 +30,8 @@ PlatformIO で構築（例外あり）。Ubuntu AMD64 マシンにてビルド�
 | WCH [CH32V003F4P6](ch32v003f4p6)   | TX: D5    | WCH SDK     | PlatformIO     |
 | WCH [CH32V003F4P6](ch32v003f4p6)   | SWDIO log | ch32v003fun | Make           |
 | WCH [CH32X035](ch32x035)           | TX: B10   | WCH SDK     | PlatformIO     |
-| Raspbery Pi [RP2040](rp2040)       | USB CDC   | PickSDK     | cmake          |
-| Raspbery Pi [RP2350](rp2350)       | USB CDC   | PickSDK     | cmake          |
+| Raspbery Pi [RP2040](rp2040)       | USB CDC   | Pico SDK     | cmake          |
+| Raspbery Pi [RP2350](rp2350)       | USB CDC   | Pico SDK     | cmake          |
 
 ## License
 
