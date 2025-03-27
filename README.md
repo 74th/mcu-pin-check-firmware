@@ -30,6 +30,7 @@ PlatformIO で構築（例外あり）。Ubuntu AMD64 マシンにてビルド�
 | WCH [CH32V003F4P6](ch32v003f4p6)   | TX: D5    | WCH SDK     | PlatformIO     | [ch32v003f4p6-uart.bin](./release/ch32v003f4p6-uart.bin) |
 | WCH [CH32V003F4P6](ch32v003f4p6)   | SDI log   | WCH SDK     | PlatformIO     | [ch32v003f4p6-sdi.bin](./release/ch32v003f4p6-sdi.bin) |
 | WCH [CH32V003F4P6](ch32v003-swd)   | SWDIO log | ch32v003fun | Make           | [ch32v003_swdio-log.bin](./release/ch32v003_swdio-log.bin) |
+| WCH [CH32V002](ch32v002-uart)      | TX: D5    | WCH SDK     | PlatformIO     | [ch32v002-uart.hex](./release/ch32v002-uart.hex) |
 | WCH [CH32X035](ch32x035)           | TX: B10   | WCH SDK     | PlatformIO     | [ch32x035.bin](./release/ch32x035.bin)       |
 | Raspberry Pi [RP2040](rp2040)       | USB CDC   | Pico SDK     | cmake        | [rp2040.uf2](./release/rp2040.uf2)           |
 | Raspberry Pi [RP2350](rp2350)       | USB CDC   | Pico SDK     | cmake        | [rp2350.uf2](./release/rp2350.uf2)           |
